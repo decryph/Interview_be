@@ -5,19 +5,25 @@ This project is a backend application designed for interview management. It serv
 ## Project Structure
 
 ```
-interview-backend
-├── src
-│   └── index.js        # Entry point of the application
-├── package.json        # Configuration file for npm
-└── README.md           # Documentation for the project
-```
+/interview-backend
+├── server.js
+├── /routes
+│   └── authRoutes.js
+├── /controllers
+│   └── authController.js
+├── /models
+│   └── User.js
+├── .env
+
 
 ## Installation
 
 To install the necessary dependencies, run:
 
 ```
-npm install
+npm install express mongoose jsonwebtoken bcryptjs dotenv cors
+npm install --save-dev nodemon
+
 ```
 
 ## Usage
@@ -25,13 +31,9 @@ npm install
 To start the application, use the following command:
 
 ```
-npm start
+npm run dev
 ```
 
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a pull request or open an issue for any suggestions or improvements.
-
-## License
-
-This project is licensed under the MIT License.
