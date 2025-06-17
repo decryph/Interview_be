@@ -13,6 +13,9 @@ app.use('/api/auth', authRoutes);
 const InterviewRoutes = require('./routes/InterviewRoutes');
 app.use('/api/InterviewRoutes', InterviewRoutes);
 
+const dsaRoutes = require('./routes/dsaRoutes');
+app.use('/api/dsa', dsaRoutes);
+
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -27,3 +30,4 @@ mongoose.connect(process.env.MONGO_URI, {
 app.get('/api/ping', (req, res) => {
   res.send('Pong!');
 });
+
