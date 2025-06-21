@@ -1,5 +1,5 @@
 const axios = require("axios");
-const questions = require("../dsa/dsaQuestions.json");
+const questions = require("../dsa/dsaquestions.json");
 
 exports.generateQuestion = (req, res) => {
   const { role, difficulty } = req.body;
