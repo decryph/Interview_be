@@ -1,8 +1,6 @@
 const axios = require("axios");
-const { OpenAI } = require("openai");
 const questions = require("../dsa/dsaquestions.json");
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 exports.generateQuestion = (req, res) => {
   const { role, difficulty } = req.body;
