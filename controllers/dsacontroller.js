@@ -1,7 +1,6 @@
 const axios = require("axios");
 const questions = require("../dsa/dsaquestions.json");
 
-
 exports.generateQuestion = (req, res) => {
   const { role, difficulty } = req.body;
 
@@ -14,7 +13,7 @@ exports.generateQuestion = (req, res) => {
   }
 
   const random = filtered[Math.floor(Math.random() * filtered.length)];
-  res.json({ question: random.question });
+  res.json({ question: random.question }); // ✅ Corrected here
 };
 
 exports.submitCode = async (req, res) => {
@@ -24,6 +23,7 @@ exports.submitCode = async (req, res) => {
     cpp: 54,
     python: 71,
     java: 62,
+    javascript: 63,
   };
 
   try {
@@ -45,7 +45,7 @@ exports.submitCode = async (req, res) => {
     const output = execRes.data.stdout || execRes.data.stderr || "No output";
 
     const aiRes = await openai.chat.completions.create({
-       "model": "gpt-4o-mini",
+      model: "gpt-4o-mini",
       messages: [
         {
           role: "system",
@@ -54,7 +54,7 @@ exports.submitCode = async (req, res) => {
         },
         {
           role: "user",
-          content: `Problem: ${question}\n\nCode:\n${code}\n\nOutput:\n${output}\n\nIs this correct? Suggest improvements if needed.`,
+          content: Problem: ${question}\n\nCode:\n${code}\n\nOutput:\n${output}\n\nIs this correct? Suggest improvements if needed.,
         },
       ],
     });
