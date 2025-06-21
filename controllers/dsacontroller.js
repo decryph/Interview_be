@@ -16,6 +16,42 @@ exports.generateQuestion = (req, res) => {
   res.json({ question: random.question });
 };
 
+exports.compileCode = async (req, res) => {
+  const { code, language } = req.body;
+
+  const langMap = {
+    cpp: 54,
+    python: 71,
+    java: 62,
+    javascript: 63,
+  };
+
+  try {
+    const response = await axios.post(
+      process.env.JUDGE0_API,
+      {
+        language_id: langMap[language],
+        source_code: code,
+        stdin: "",
+      },
+      {
+        headers: {
+          "X-RapidAPI-Key": process.env.RAPIDAPI_KEY,
+          "X-RapidAPI-Host": ""judge0-ce.p.rapidapi.com",
+        },
+      }
+    );
+
+    const output =
+      response.data.stdout || response.data.compile_output || response.data.stderr || "✅ Code compiled.";
+
+    res.json({ success: true, output });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+            
 exports.submitCode = async (req, res) => {
   const { code, language, question } = req.body;
 
