@@ -14,7 +14,7 @@ exports.generateQuestion = (req, res) => {
   }
 
   const random = filtered[Math.floor(Math.random() * filtered.length)];
-  res.json({ question: random.questions });
+  res.json({ question: random.question });
 };
 
 exports.submitCode = async (req, res) => {
