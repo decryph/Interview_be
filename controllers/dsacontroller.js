@@ -37,7 +37,7 @@ exports.compileCode = async (req, res) => {
       {
         headers: {
           "X-RapidAPI-Key": process.env.RAPIDAPI_KEY,
-          "X-RapidAPI-Host": ""judge0-ce.p.rapidapi.com",
+          "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
         },
       }
     );
