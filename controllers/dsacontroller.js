@@ -1,3 +1,21 @@
+const axios = require("axios");
+const questions = require("../dsa/dsaQuestions.json");
+
+exports.generateQuestion = (req, res) => {
+  const { role, difficulty } = req.body;
+
+  const filtered = questions.filter(
+    (q) => q.role === role && q.difficulty === difficulty
+  );
+
+  if (filtered.length === 0) {
+    return res.status(404).json({ message: "No question found." });
+  }
+
+  const random = filtered[Math.floor(Math.random() * filtered.length)];
+  res.json({ question: random.question });
+};
+
 exports.submitCode = async (req, res) => {
   const { code, language, question } = req.body;
 
@@ -5,7 +23,6 @@ exports.submitCode = async (req, res) => {
     cpp: 54,
     python: 71,
     java: 62,
-    javascript: 63,
   };
 
   try {
@@ -26,22 +43,8 @@ exports.submitCode = async (req, res) => {
 
     const output = execRes.data.stdout || execRes.data.stderr || "No output";
 
-    const aiRes = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are a coding interviewer. Analyze the code and output for correctness.",
-        },
-        {
-          role: "user",
-          content: `Problem: ${question}\n\nCode:\n${code}\n\nOutput:\n${output}\n\nIs this correct? Suggest improvements if needed.`,
-        },
-      ],
-    });
-
-    const feedback = aiRes.choices[0].message.content;
+    // Since OpenAI isn't used, just return dummy feedback
+    const feedback = "AI feedback not available (OpenAI disabled).";
 
     res.json({ output, feedback });
   } catch (err) {
