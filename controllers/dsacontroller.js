@@ -52,10 +52,11 @@ exports.submitCode = async (req, res) => {
           content:
             "You are a coding interviewer. Analyze the code and output for correctness.",
         },
-        {
-          role: "user",
-          content: Problem: ${question}\n\nCode:\n${code}\n\nOutput:\n${output}\n\nIs this correct? Suggest improvements if needed.,
-        },
+        
+         const prompt = {
+  content: `Problem: ${question}\n\nCode:\n${code}\n\nOutput:\n${output}\n\nIs this correct? Suggest improvements if needed.`
+};
+
       ],
     });
 
