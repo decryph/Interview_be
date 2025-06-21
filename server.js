@@ -16,7 +16,7 @@ app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const voiceRoutes = require("./routes/voiceroutes");
+const voiceRoutes = require("./routes/voiceRoutes");
 app.use("/api", voiceRoutes);
 
 app.get("/", (req, res) => {
