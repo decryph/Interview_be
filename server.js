@@ -7,6 +7,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const allowedOrigins = [
+  "http://localhost:5900",
+  "https://mock-ai.vercel.app"
+];
+
+app.use(cors({ origin: allowedOrigins, credentials: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const voiceRoutes = require("./routes/voiceroutes");
+app.use("/api", voiceRoutes);
+
+app.get("/", (req, res) => {
+  res.send("MockAI backend is running");
+});
+
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
