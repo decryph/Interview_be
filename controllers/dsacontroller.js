@@ -1,21 +1,3 @@
-const axios = require("axios");
-const questions = require("../dsa/dsaquestions.json");
-
-exports.generateQuestion = (req, res) => {
-  const { role, difficulty } = req.body;
-
-  const filtered = questions.filter(
-    (q) => q.role === role && q.difficulty === difficulty
-  );
-
-  if (filtered.length === 0) {
-    return res.status(404).json({ message: "No question found." });
-  }
-
-  const random = filtered[Math.floor(Math.random() * filtered.length)];
-  res.json({ question: random.question }); // ✅ Corrected here
-};
-
 exports.submitCode = async (req, res) => {
   const { code, language, question } = req.body;
 
@@ -52,11 +34,10 @@ exports.submitCode = async (req, res) => {
           content:
             "You are a coding interviewer. Analyze the code and output for correctness.",
         },
-        
-         const prompt = {
-  content: `Problem: ${question}\n\nCode:\n${code}\n\nOutput:\n${output}\n\nIs this correct? Suggest improvements if needed.`
-};
-
+        {
+          role: "user",
+          content: `Problem: ${question}\n\nCode:\n${code}\n\nOutput:\n${output}\n\nIs this correct? Suggest improvements if needed.`,
+        },
       ],
     });
 
