@@ -10,17 +10,16 @@ exports.getScoreFeedback = async (req, res) => {
 
     const response = await axios.post(
       "https://feedback-learning-generator.onrender.com/analyze_scores/",
-      { scores }
+      { scores },
+      { timeout: 15000 }
     );
 
-    const data = response.data;
-    return res.status(200).json(data);
-
-  } catch (error) {
-    console.error("❌ Score feedback error:", error.message);
-    if (error.response) {
-      return res.status(500).json({ error: error.response.data });
-    }
-    return res.status(500).json({ error: "Internal Server Error" });
-  }
+   return res.status(200).json(response.data);
+} catch (error) {
+console.error("❌ Score feedback error:", error.message);
+if (error.response?.data) {
+return res.status(500).json({ error: error.response.data });
+}
+return res.status(500).json({ error: "Internal Server Error" });
+}
 };
