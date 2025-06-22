@@ -1,10 +1,8 @@
-// controllers/resumeController.js
 const axios = require('axios');
 const FormData = require('form-data');
 
 exports.generateQuestionsFromResume = async (req, res) => {
   try {
-    const { jobDescription, numQuestions } = req.body;
     const file = req.file;
 
     if (!file) {
@@ -13,8 +11,6 @@ exports.generateQuestionsFromResume = async (req, res) => {
 
     const form = new FormData();
     form.append('resume', file.buffer, file.originalname);
-    form.append('jobDescription', jobDescription || '');
-    form.append('numQuestions', numQuestions || '5');
 
     const response = await axios.post('https://llmquestion.onrender.com', form, {
       headers: form.getHeaders(),
