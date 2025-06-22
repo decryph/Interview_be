@@ -11,7 +11,9 @@ const { scores } = req.body;
 const response = await axios.post(
   "https://feedbackgenerator-yz6t.onrender.com/analyze_scores/",
   { scores },
-  { timeout: 30000 }
+ {
+    timeout: 120000 // 2 minutes
+  }
 );
 
 return res.status(200).json(response.data);
