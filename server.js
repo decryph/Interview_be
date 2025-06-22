@@ -7,6 +7,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
+const resumeRoutes = require('./routes/resumeRoutes');
+app.use('/api', resumeRoutes);
+
+
 const allowedOrigins = [
   "http://localhost:5900",
   "https://mock-ai.vercel.app"
