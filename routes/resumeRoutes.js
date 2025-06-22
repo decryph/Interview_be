@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { generateQuestions } = require('../controllers/resumeController');
+
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() }); // Use in-memory for small files
 
-router.post('/upload-resume', upload.single('resume'), generateQuestions);
+const { generateQuestionsFromResume } = require("../controllers/resumeController");
+
+router.post("/upload-resume", upload.single("resume"), generateQuestionsFromResume);
 
 module.exports = router;
