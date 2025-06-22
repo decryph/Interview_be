@@ -8,6 +8,9 @@ app.use(cors());
 app.use(express.json());
 
 
+const scoreRoutes = require("./routes/scoreRoutes");
+app.use("/api", scoreRoutes);
+
 const resumeRoutes = require("./routes/resumeRoutes");
 app.use("/api", resumeRoutes);
 
