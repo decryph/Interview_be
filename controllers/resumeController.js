@@ -1,27 +1,29 @@
-const axios = require('axios');
-const FormData = require('form-data');
+const axios = require("axios");
+const FormData = require("form-data");
 
 exports.generateQuestionsFromResume = async (req, res) => {
   try {
     const file = req.file;
-
     if (!file) {
-      return res.status(400).json({ message: 'No resume uploaded' });
+      return res.status(400).json({ error: "Resume file is required" });
     }
 
     const form = new FormData();
-    form.append('resume', file.buffer, file.originalname);
+    form.append("resume", file.buffer, file.originalname);
 
-    const response = await axios.post('https://llmquestion.onrender.com', form, {
+    const response = await axios.post("https://llmquestion.onrender.com", form, {
       headers: form.getHeaders(),
     });
 
-    res.status(200).json(response.data);
+    const data = response.data;
+
+    if (data.questions && Array.isArray(data.questions)) {
+      return res.json({ questions: data.questions });
+    } else {
+      return res.status(500).json({ error: "No questions returned from model." });
+    }
   } catch (error) {
-    console.error('Error generating questions:', error.message);
-    return res.status(500).json({
-      message: 'Failed to generate questions',
-      error: error.message,
-    });
+    console.error("Model API error:", error.message);
+    return res.status(500).json({ error: "Failed to generate questions" });
   }
 };
