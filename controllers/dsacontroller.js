@@ -80,7 +80,49 @@ exports.submitCode = async (req, res) => {
     const output = execRes.data.stdout || execRes.data.stderr || "No output";
 
     // Since OpenAI isn't used, just return dummy feedback
-    const feedback = "AI feedback not available (OpenAI disabled).";
+     const feedback = "✅ Code executed. Feedback not enabled (OpenAI skipped).";
+
+    res.json({ success: true, output, feedback });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+exports.runCustom = async (req, res) => {
+  const { code, language, input } = req.body;
+
+  const langMap = {
+    cpp: 54,
+    python: 71,
+    java: 62,
+    javascript: 63,
+  };
+
+  try {
+    const response = await axios.post(
+      process.env.JUDGE0_API,
+      {
+        language_id: langMap[language],
+        source_code: code,
+        stdin: input || "",
+      },
+      {
+        headers: {
+          "X-RapidAPI-Key": process.env.RAPIDAPI_KEY,
+          "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
+        },
+      }
+    );
+
+     const output =
+      response.data.stdout || response.data.compile_output || response.data.stderr || "No output";
+
+    res.json({ success: true, output });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
 
     await Submission.create({
   question,
