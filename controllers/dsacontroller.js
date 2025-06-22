@@ -82,8 +82,26 @@ exports.submitCode = async (req, res) => {
     // Since OpenAI isn't used, just return dummy feedback
     const feedback = "AI feedback not available (OpenAI disabled).";
 
+    await Submission.create({
+  question,
+  code,
+  language,
+  output,
+  feedback
+});
+    
     res.json({ output, feedback });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.getHistory = async (req, res) => {
+  try {
+    const history = await Submission.find().sort({ createdAt: -1 });
+    res.json(history);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
