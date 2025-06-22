@@ -8,8 +8,8 @@ app.use(cors());
 app.use(express.json());
 
 
-const scoreRoutes = require("./routes/scoreRoutes");
-app.use("/api", scoreRoutes);
+const geminiRoutes = require("./routes/geminiFeedbackRoutes");
+app.use("/api", geminiRoutes);
 
 const resumeRoutes = require("./routes/resumeRoutes");
 app.use("/api", resumeRoutes);
