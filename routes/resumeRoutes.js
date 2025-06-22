@@ -6,6 +6,6 @@ const upload = multer({ storage: multer.memoryStorage() }); // Use in-memory for
 
 const { generateQuestionsFromResume } = require("../controllers/resumeController");
 
-router.post("/upload-resume", upload.single("resume"), generateQuestionsFromResume);
+router.post("/upload-resume", upload.single("file"), generateQuestionsFromResume);
 
 module.exports = router;
