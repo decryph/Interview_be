@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-exports.generateQuestions = async (req, res) => {
+exports.generateQuestionsFromResume = async (req, res) => {
   try {
     const file = req.file;
 
