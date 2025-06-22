@@ -8,8 +8,8 @@ app.use(cors());
 app.use(express.json());
 
 
-const resumeRoutes = require('./routes/resumeRoutes');
-app.use('/api', resumeRoutes);
+const resumeRoutes = require("./routes/resumeRoutes");
+app.use("/api", resumeRoutes);
 
 
 const allowedOrigins = [
