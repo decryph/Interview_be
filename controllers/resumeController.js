@@ -1,7 +1,7 @@
 const axios = require("axios");
 const FormData = require("form-data");
 
-exports.generateQuestionsFromResume = (req, res) => {
+exports.generateQuestionsFromResume = async (req, res) => {
   try {
     const file = req.file;
     if (!file) {
