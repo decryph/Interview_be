@@ -1,5 +1,6 @@
 const axios = require("axios");
 const questions = require("../dsa/dsaquestions.json");
+const Submission = require('../models/Submission');
 
 exports.generateQuestion = (req, res) => {
   const { role, difficulty } = req.body;
@@ -80,7 +81,8 @@ exports.submitCode = async (req, res) => {
     const output = execRes.data.stdout || execRes.data.stderr || "No output";
 
     // Since OpenAI isn't used, just return dummy feedback
-     const feedback = "✅ Code executed. Feedback not enabled (OpenAI skipped).";
+    const feedback = "Code executed. Please review the output and optimize your solution if needed.";
+
 
     await Submission.create({
   question,
@@ -94,41 +96,6 @@ exports.submitCode = async (req, res) => {
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
-};
-
-exports.runCustom = async (req, res) => {
-  const { code, language, input } = req.body;
-
-  const langMap = {
-    cpp: 54,
-    python: 71,
-    java: 62,
-    javascript: 63,
-  };
-
-  try {
-    const response = await axios.post(
-      process.env.JUDGE0_API,
-      {
-        language_id: langMap[language],
-        source_code: code,
-        stdin: input || "",
-      },
-      {
-        headers: {
-          "X-RapidAPI-Key": process.env.RAPIDAPI_KEY,
-          "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
-        },
-      }
-    );
-
-     const output =
-      response.data.stdout || response.data.compile_output || response.data.stderr || "No output";
-
-    res.json({ success: true, output });
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
-  }
 };
 
 
