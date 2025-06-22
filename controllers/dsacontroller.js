@@ -81,8 +81,7 @@ exports.submitCode = async (req, res) => {
     const output = execRes.data.stdout || execRes.data.stderr || "No output";
 
     // Since OpenAI isn't used, just return dummy feedback
-    const feedback = "Code executed. Please review the output and optimize your solution if needed.";
-
+    const feedback = "AI feedback not available (OpenAI disabled).";
 
     await Submission.create({
   question,
@@ -91,13 +90,12 @@ exports.submitCode = async (req, res) => {
   output,
   feedback
 });
-
-    res.json({ success: true, output, feedback });
+    
+    res.json({ output, feedback });
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
-
 
 exports.getHistory = async (req, res) => {
   try {
@@ -107,4 +105,3 @@ exports.getHistory = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
