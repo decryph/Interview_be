@@ -9,20 +9,15 @@ exports.generateQuestions = async (req, res) => {
     }
 
     // Convert buffer to base64 or send directly based on model API
-    const resumeBuffer = file.buffer;
-    const base64Resume = resumeBuffer.toString('base64');
-
+  const resumeBase64 = file.buffer.toString("base64");
     // Call the external model API
     const response = await axios.post('https://llmquestion.onrender.com/', {
-      resume: base64Resume, // adapt this based on what your model expects
+      resume: resumeBase64, // adapt this based on what your model expects
     });
 
-    const questions = response.data;
-
-    res.status(200).json({ questions });
-
+    res.status(200).json(response.data);
   } catch (error) {
     console.error('Error generating questions:', error.message);
-    res.status(500).json({ error: 'Failed to generate questions' });
+    return res.status(500).json({ message: 'Failed to generate questions',error: error.message });
   }
 };
