@@ -82,6 +82,14 @@ exports.submitCode = async (req, res) => {
     // Since OpenAI isn't used, just return dummy feedback
      const feedback = "✅ Code executed. Feedback not enabled (OpenAI skipped).";
 
+    await Submission.create({
+  question,
+  code,
+  language,
+  output,
+  feedback
+});
+
     res.json({ success: true, output, feedback });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
@@ -123,20 +131,6 @@ exports.runCustom = async (req, res) => {
   }
 };
 
-
-    await Submission.create({
-  question,
-  code,
-  language,
-  output,
-  feedback
-});
-    
-    res.json({ output, feedback });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
 
 exports.getHistory = async (req, res) => {
   try {
