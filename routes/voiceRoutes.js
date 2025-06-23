@@ -2,6 +2,9 @@ const express = require("express");
 const multer = require("multer");
 const router = express.Router();
 
+const voiceController = require("../controllers/voiceController");
+router.post("/process", voiceController.processVoiceAnswer);
+
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
