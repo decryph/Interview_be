@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const SubmissionSchema = new mongoose.Schema({
+const submissionSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -17,4 +17,4 @@ const SubmissionSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("Submission", SubmissionSchema);
+module.exports = mongoose.model("submission", submissionSchema);
