@@ -1,26 +1,12 @@
 const express = require("express");
-const multer = require("multer");
 const router = express.Router();
-
+const multer = require("multer");
 const voiceController = require("../controllers/voiceController");
-router.post("/process", voiceController.processVoiceAnswer);
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({ dest: "uploads/" });
 
-router.post("/voice-to-text", upload.single("audio"), async (req, res) => {
-  try {
-    const audioBuffer = req.file.buffer;
-
-    // Dummy response (replace with actual STT model later)
-    const transcript = "This is a dummy transcription";
-    const evaluation = "Good clarity and tone!";
-
-    res.json({ transcript, evaluation });
-  } catch (err) {
-    console.error("Error processing audio:", err);
-    res.status(500).json({ error: "Server error" });
-  }
-});
+router.post("/process", upload.single("audio"), voiceController.processVoiceAnswer);
 
 module.exports = router;
+
+dsaroute.js
