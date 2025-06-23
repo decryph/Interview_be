@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
 const voiceController = require("../controllers/voiceController");
 
-// Main entry to process voice (fetch expected, transcribe voice, compare)
-router.post("/process", voiceController.processVoiceAnswer);
+const upload = multer({ dest: "uploads/" });
+
+router.post("/process", upload.single("audio"), voiceController.processVoiceAnswer);
 
 module.exports = router;
