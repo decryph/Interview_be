@@ -7,9 +7,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const submissionRoutes = require('./routes/submission');
-app.use('/api', submissionRoutes);
-
 const geminiRoutes = require("./routes/geminiFeedbackRoutes");
 app.use("/api", geminiRoutes);
 
