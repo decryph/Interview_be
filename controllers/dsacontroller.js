@@ -1,6 +1,6 @@
 const axios = require("axios");
 const questions = require("../dsa/dsaquestions.json");
-const Submission = require('../models/Submission');
+const Submission = require("../models/Submission");
 
 exports.generateQuestion = (req, res) => {
   const { role, difficulty } = req.body;
@@ -18,7 +18,7 @@ exports.generateQuestion = (req, res) => {
 };
 
 exports.compileCode = async (req, res) => {
-  const { code, language } = req.body;
+  const { code, language, stdin } = req.body; // ✅ accept stdin from frontend
 
   const langMap = {
     cpp: 54,
@@ -33,7 +33,7 @@ exports.compileCode = async (req, res) => {
       {
         language_id: langMap[language],
         source_code: code,
-        stdin: "",
+        stdin: stdin || "", // ✅ use stdin from user input
       },
       {
         headers: {
@@ -52,9 +52,8 @@ exports.compileCode = async (req, res) => {
   }
 };
 
-            
 exports.submitCode = async (req, res) => {
-  const { code, language, question } = req.body;
+  const { code, language, question, stdin } = req.body; // ✅ accept stdin
 
   const langMap = {
     cpp: 54,
@@ -68,7 +67,7 @@ exports.submitCode = async (req, res) => {
       {
         language_id: langMap[language],
         source_code: code,
-        stdin: "",
+        stdin: stdin || "", // ✅ use stdin from frontend
       },
       {
         headers: {
@@ -80,17 +79,17 @@ exports.submitCode = async (req, res) => {
 
     const output = execRes.data.stdout || execRes.data.stderr || "No output";
 
-    // Since OpenAI isn't used, just return dummy feedback
+    // Dummy feedback since OpenAI isn't integrated
     const feedback = "AI feedback not available (OpenAI disabled).";
 
     await Submission.create({
-  question,
-  code,
-  language,
-  output,
-  feedback
-});
-    
+      question,
+      code,
+      language,
+      output,
+      feedback,
+    });
+
     res.json({ output, feedback });
   } catch (err) {
     res.status(500).json({ error: err.message });
