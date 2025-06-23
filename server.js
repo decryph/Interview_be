@@ -7,11 +7,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use((req, res, next) => {
-  console.log(`[${req.method}] ${req.originalUrl}`);
-  next();
-});
-
+const geminiRoutes = require("./routes/geminiFeedbackRoutes");
+app.use("/api", geminiRoutes);
 
 const resumeRoutes = require("./routes/resumeRoutes");
 app.use("/api", resumeRoutes);
@@ -48,7 +45,7 @@ mongoose.connect(process.env.MONGO_URI, {
 }).then(() => {
   console.log('Connected to MongoDB');
   app.listen(process.env.PORT || 5900, () => {
-    console.log(`Server is running on port ${process.env.PORT || 5900}`);
+    console.log(Server is running on port ${process.env.PORT || 5900});
   });
 
 }).catch(err => console.log(err));
