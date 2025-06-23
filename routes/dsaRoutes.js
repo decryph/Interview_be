@@ -5,7 +5,12 @@ const { generateQuestion, submitCode, compileCode, getHistory } = require("../co
 router.post("/generate-question", generateQuestion);
 router.post("/submit-code", submitCode);
 router.post("/compile-code", compileCode);
-router.get("/history",getHistory);
+router.get("/history",authMiddleware, getHistory);
+
+console.log("generateQuestion:", typeof exports.generateQuestion);
+console.log("submitCode:", typeof exports.submitCode);
+console.log("compileCode:", typeof exports.compileCode);
+console.log("getHistory:", typeof exports.getHistory);
 
 
 module.exports = router;
