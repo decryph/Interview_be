@@ -27,7 +27,7 @@ exports.submitCode = async (req, res) => {
     const output = execRes.data.stdout || execRes.data.stderr || "No output";
     const feedback = "AI feedback not available (OpenAI disabled).";
 
-    await Submission.create({
+    await submission.create({
       userId: req.user.id, // ✅ capture logged-in user ID
       question,
       code,
