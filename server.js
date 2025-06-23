@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const voiceRoutes = require("./routes/voiceRoutes");
-app.use("/api", voiceRoutes);
+app.use("/api/voice", voiceRoutes);
 
 app.get("/", (req, res) => {
   res.send("MockAI backend is running");
