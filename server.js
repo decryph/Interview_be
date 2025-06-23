@@ -7,9 +7,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const voiceRoutes = require("../routes/voiceRoutes");
-app.use("/api/voice", voiceRoutes);
-
 const geminiRoutes = require("./routes/geminiFeedbackRoutes");
 app.use("/api", geminiRoutes);
 
