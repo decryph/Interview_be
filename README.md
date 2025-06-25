@@ -9,8 +9,15 @@ This project is a backend application designed for interview management. It serv
 ├── server.js
 ├── /routes
 │   └── authRoutes.js
+│   └── dsaRoutes.js
+│   └── InterviewRoutes.js
+│   └── resumeRoutes.js
+│   └── voiceRoutes.js
 ├── /controllers
 │   └── authController.js
+│   └── voiceController.js
+│   └── dsaController.js
+│   └── resumeController.js
 ├── /models
 │   └── User.js
 ├── .env
